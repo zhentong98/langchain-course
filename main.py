@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
 
@@ -29,11 +30,12 @@ Musk was the largest donor in the 2024 U.S. presidential election, where he supp
         template=summary_template
     )
 
-    llm = ChatOpenAI(temperature=0, model="gpt-5")
+    # llm = ChatOpenAI(temperature=0, model="gpt-5")
     # llm = ChatOllama(temperature=0, model="gemma3:270m")
+    llm = ChatGoogleGenerativeAI(model="gemini-3.1-pro-preview")
     chain = summary_prompt_template | llm
     response = chain.invoke(input={"information": information})
-    print(response.content)
+    print(response.text)
 
 
 if __name__ == "__main__":
